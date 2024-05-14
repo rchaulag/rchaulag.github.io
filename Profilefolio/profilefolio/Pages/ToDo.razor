@@ -1,0 +1,50 @@
+﻿@page "/todo"
+@using Models.ToDo
+
+<h3>My Todo List</h3>
+
+@code {
+
+    // create a list of todo items
+
+    private List<TodoItem> todoItems = new();
+    string newTodoItem = string.Empty;
+
+
+    // add new todo item into the list
+    void addTodoItem()
+    {
+        if (!string.IsNullOrEmpty(newTodoItem))
+        {
+            todoItems.Add(new TodoItem { Title = newTodoItem });
+            newTodoItem = string.Empty;
+        }
+    }
+}
+
+@*// Display ToDo List Items*@
+<div class="jumbotron">
+    @if (todoItems.Count() > 0)
+    {
+        <ul>
+            @foreach (var item in todoItems)
+            {
+                <li>@item.Title</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="alert alert-warning">No Todo Items at this moment.</p>
+    }
+
+</div>
+
+
+@*// Create ToDo Item*@
+
+<div class="form-horizontal">
+    @*<input onclick="()=> todoItem = addTodoItem" />*@
+    <input @bind="newTodoItem" />
+    <button @onclick="addTodoItem">Add todo Item</button>
+</div>

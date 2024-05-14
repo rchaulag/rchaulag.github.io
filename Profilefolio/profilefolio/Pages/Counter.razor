@@ -1,0 +1,59 @@
+﻿
+
+@page "/counter"
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+<p>Current Increment Amount: @IncrementAmount</p>
+<p>@message</p>
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+<br />
+<br />
+
+<div class="form-horizontal">
+    <input @onchange="inputChange" class="form-control" placeholder="type something" />
+    @if (inputMessage != string.Empty)
+    {
+        <p class="alert alert-info">@inputMessage</p>
+    }
+</div>
+
+<br />
+
+<section>
+    <p>Data Binding</p>
+
+    <input @bind="text" />
+    <button @onclick="() => text = string.Empty">Clear</button>
+    <p>@text</p>
+</section>
+
+
+
+@code {
+    private int currentCount = 0;
+    private string message = string.Empty;
+    private string inputMessage = string.Empty;
+    private string text = string.Empty;
+
+    [Parameter]
+    public int IncrementAmount { get; set; } = 1;
+
+    private void IncrementCount()
+    {
+        currentCount = currentCount + IncrementAmount;
+
+        if (currentCount > 3)
+        {
+            message = "You've have clicked " + currentCount + " times.";
+        }
+    }
+
+    private void inputChange(ChangeEventArgs e)
+    {
+        inputMessage = (string)e.Value;
+    }
+
+}
