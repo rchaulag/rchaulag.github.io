@@ -17,7 +17,7 @@
 *.txt
 *.CopyComplete
 *.sqlite
-*.sln
+
 *.config
 *.Up2Date
 *.dtbcache
