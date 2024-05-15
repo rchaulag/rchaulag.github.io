@@ -18,3 +18,15 @@
 *.CopyComplete
 *.sqlite
 *.sln
+*.config
+*.Up2Date
+*.dtbcache
+*.v2
+*.ide
+*.ide-shm
+*.ide-wal
+*.lock
+*.wsuo
+*.bin
+*.vsidx
+*.user
