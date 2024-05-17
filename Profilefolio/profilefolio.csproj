@@ -4,4 +4,33 @@
     <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="Pages\Product\Product.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Product\" />
+    <Folder Include="wwwroot\images\product\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Product\Product.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Product\Product.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Product.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.1.38" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProductDAL\ProductDAL.csproj" />
+  </ItemGroup>
+
 </Project>

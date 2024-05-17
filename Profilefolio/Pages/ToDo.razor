@@ -5,11 +5,10 @@
 
 @code {
 
-    // create a list of todo items
+    //Properties
 
     private List<TodoItem> todoItems = new();
     string newTodoItem = string.Empty;
-
 
     // add new todo item into the list
     void addTodoItem()
@@ -24,12 +23,18 @@
 
 @*// Display ToDo List Items*@
 <div class="jumbotron">
+    <h4>Total Incomplete Todo Items @todoItems.Count(p=>!p.IsDone)</h4>
+
     @if (todoItems.Count() > 0)
     {
         <ul>
             @foreach (var item in todoItems)
             {
-                <li>@item.Title</li>
+                <li>
+                    <input type="checkbox" @bind="item.IsDone">
+                   <input @bind="item.Title">
+                </li>
+                
             }
         </ul>
     }
@@ -42,7 +47,6 @@
 
 
 @*// Create ToDo Item*@
-
 <div class="form-horizontal">
     @*<input onclick="()=> todoItem = addTodoItem" />*@
     <input @bind="newTodoItem" />

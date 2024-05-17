@@ -1,7 +1,48 @@
 ﻿@page "/"
+@using profilefolio.Models.Product
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
+<p class="alert alert-info">@welcomeMessage</p>
+<p class="alert alert-success"> This is a sample application for Product Navigation.</p>
+
+
+@*// Display Products*@
+<div class="main">
+    <h3>Blazing Products !! </h3>
+    <ul class="product-cards">
+        @foreach (var product in products)
+        {
+            <li style="background-image: url('@product.ImageUrl')">
+                <div class="product-info">
+                    <span class="product-title">@product.Name</span>
+                    @product.Description
+                    <span class="product-price">@product.GetFormattedBasePrice()</span>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
+
+
+@code {
+    string welcomeMessage = "Welcome to my blazor playground !! I am leaning ye!";
+
+    //create list of products to be displayed
+    List<ProductViewModel> products = new List<ProductViewModel>();
+
+    protected override void OnInitialized()
+    {
+        products.AddRange(new List<ProductViewModel>
+        {
+            new ProductViewModel{ Id =1, Name="Christmas Card", Description="Christmas holiday gift card",BasePrice=1.99M,MarketRetailerPrice=1.99M,ImageUrl="images/product/christmas-card.jpg"},
+            new ProductViewModel{ Id =2, Name="House", Description="Property family house 4 bed 2 bath",BasePrice=1099.99M,MarketRetailerPrice=1099.99M,ImageUrl="images/product/house.jpg"},
+            new ProductViewModel{ Id =3, Name="Perception Wallpaper", Description="Wallpaper",BasePrice=4.99M,MarketRetailerPrice=4.99M,ImageUrl="images/product/perception.jpg"},
+            new ProductViewModel{ Id =4, Name="Temple", Description="Wooden hindu temple",BasePrice=19.99M,MarketRetailerPrice=19.99M,ImageUrl="images/product/temple.jpeg"}
+        });
+    }
+
+
+}
 
 <SurveyPrompt Title="How is Blazor working for you?" />

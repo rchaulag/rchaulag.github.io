@@ -1,0 +1,87 @@
+﻿@page "/product"
+@*// add model reference, injecting service dependencies*@
+@using ProductDAL
+@using System.Text;
+@using System.Net.Http.Json;
+@inject profilefolio.Data.Product.ProductService productService
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+
+<h3>Available Products in our store</h3>
+
+@if (vm.Count() == 0 || vm == null)
+{
+    <p>No available products are found at this moment. Check back later.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Product Name</th>
+                <th>Description</th>
+                <th>Edibility?</th>
+                <th>Price</th>
+                <th>MRP</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in vm)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                    <td>@product.ProductEdibilityType</td>
+                    <td>@product.BasePrice</td>
+                    <td>@product.MarketRetailerPrice</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+}
+
+
+
+@code {
+    private List<profilefolio.Models.Product.ProductViewModel> vm = new List<Models.Product.ProductViewModel>();
+
+    protected override async Task OnInitializedAsync()
+    {      
+        var products =   await HttpClient.GetFromJsonAsync<List<ProductDAL.Product>>(NavigationManager.BaseUri + "products"); // getting from API Controller
+    
+      //  var products = await productService.GetProductsAsync(); // getting from service class
+        if (products != null)
+        {
+            foreach (var product in products)
+            {
+                var edibility = new StringBuilder();
+                if (product.Vegan && product.Vegetarian)
+                {
+                    edibility.Append("Vegan,Vegetarian");
+                }
+                else if (!product.Vegan && !product.Vegetarian)
+                {
+                        edibility.Append("No Vegan, No Vegeterian");                    
+                }
+                else
+                {
+                    if (product.Vegan)
+                    {
+                        edibility.Append("Vegan");
+                    }
+                    if (product.Vegetarian)
+                    {
+                        edibility.Append("Vegetarian");
+                    }
+                }
+                var calculatedBasePrice =Math.Round(product.MarketRetailPrice / 1.1M);
+                vm.Add(new Models.Product.ProductViewModel { Id = product.Id, Name = product.Name, Description = product.Description, BasePrice = calculatedBasePrice,MarketRetailerPrice= product.MarketRetailPrice, ProductEdibilityType = edibility.ToString() });
+            }
+        }
+    }
+
+}

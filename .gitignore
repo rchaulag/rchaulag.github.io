@@ -30,3 +30,11 @@
 *.bin
 *.vsidx
 *.user
+*.BuildWithSkipAnalyzers
+*.manifest
+*.so
+*.dylib
+*.a
+*.testlog
+*.db-shm
+*.db-wal
